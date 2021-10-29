@@ -1,0 +1,19 @@
+{
+  "name": "fetch_rewards_exercise",
+  "version": "1.0.0",
+  "description": "backend challenge for fetch rewards",
+  "main": "app.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jlh040/fetch-rewards-coding-exercise.git"
+  },
+  "author": "Jeff Hall",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jlh040/fetch-rewards-coding-exercise/issues"
+  },
+  "homepage": "https://github.com/jlh040/fetch-rewards-coding-exercise#readme"
+}
