@@ -12,13 +12,17 @@ const partners = [
 const transactions = [];
 
 router.post('/transaction', (req, res, next) => {
-  console.log(req.body)
-  // const { payer, points, timestamp } = req.body;
-  // return res.json({payer, points, timestamp});
+  const { payer, points, timestamp } = req.body;
+  transactions.push({payer, points, timestamp});
+  return res.status(201).json(transactions);
 });
 
 router.get('/points', (req, res, next) => {
-  return res.json(partners);
+  try {
+    return res.json(partners);
+  } catch(err) {
+    return next(err)
+  }
 })
 
 
