@@ -22,10 +22,11 @@ router.post('/transaction', (req, res, next) => {
     }
 
     const { payer, points } = req.body;
-    transactions.push({payer, points, timestamp});
+    const transaction = {payer, points, timestamp}
+    transactions.push(transaction);
     transactions.sort((a, b) => moment(a.timestamp) - moment(b.timestamp));
 
-    return res.status(201).json(transactions);
+    return res.status(201).json(transaction);
   } catch(err) {
     return next(err);
   }
@@ -35,7 +36,7 @@ router.get('/points', (req, res, next) => {
   try {
     let partnerObj = {};
     partners.forEach(partner => partnerObj[partner.payer] = partner.points);
-    
+
     return res.json(partnerObj);
   } catch(err) {
     return next(err)
