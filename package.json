@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/jlh040/fetch-rewards-coding-exercise#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "lodash": "^4.17.21"
   }
 }
