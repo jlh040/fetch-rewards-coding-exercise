@@ -47,7 +47,7 @@ describe('POST /transactions', () => {
     expect(transactions.length).toBe(1);
   });
 
-  test('transactions are sorted from oldest to newest', () => {
+  test('transactions are sorted from oldest to newest', async () => {
     const transaction1 = {
       payer: 'UNILEVER',
       points: 30,
@@ -69,32 +69,31 @@ describe('POST /transactions', () => {
       timestamp: '1999-11-10 17:54:22Z'
     };
 
-    const resp1 = request(app)
+    const resp1 = await request(app)
       .post('/transactions')
       .send(transaction1);
 
-    const resp2 = request(app)
+    const resp2 = await request(app)
       .post('/transactions')
       .send(transaction2);
 
-    const resp3 = request(app)
+    const resp3 = await request(app)
       .post('/transactions')
       .send(transaction3);
 
-    const resp4 = request(app)
+    const resp4 = await request(app)
       .post('/transactions')
       .send(transaction4);
 
-    Promise.all([resp1, resp2, resp3, resp4])
-      .then(() => {
-        expect(transactions[0]).toEqual(transaction2);
-        expect(transactions[3]).toEqual(transaction4);
-      });
+    
+    expect(transactions[0]).toEqual(transaction2);
+    expect(transactions[3]).toEqual(transaction4);
+    
   });
 });
 
 describe('GET /points', () => {
-  test('returns points for all payers', async () => {
+  test('accurately returns points for all payers', async () => {
     const transaction1 = {
       payer: 'MILLER COORS',
       points: 300,
@@ -126,6 +125,10 @@ describe('GET /points', () => {
     const resp4 = await request(app)
       .get('/points')
 
-    expect(Object.keys(resp4.body)).toEqual(['DANNON', 'UNILEVER', 'MILLER COORS']);
-  })
+    expect(resp4.body).toEqual({
+      DANNON: 470,
+      UNILEVER: 250,
+      'MILLER COORS': 300
+    });
+  });
 })
