@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const ExpressError = require('./expressError');
 
 const app = express();
 
