@@ -33,7 +33,10 @@ class Transaction {
 
   static spend(amount) {
     if (amount > this.getTotalBalance()) {
-      throw new ExpressError(`You don't have enough points`);
+      throw new ExpressError(`You don't have enough points!`, 400);
+    }
+    else {
+      return {message: 'nice one!'};
     }
   }
 }

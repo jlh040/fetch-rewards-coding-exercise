@@ -33,6 +33,16 @@ router.get('/points', (req, res, next) => {
   }
 });
 
+router.post('/points', (req, res, next) => {
+  try {
+    const amount = +req.body.amount;
+    let resp = Transaction.spend(amount);
+    return res.json(resp);
+  } catch(err) {
+    return next(err);
+  }
+})
+
 
 
 module.exports = router;
