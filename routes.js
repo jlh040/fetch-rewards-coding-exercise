@@ -11,6 +11,11 @@ const partners = [
 // fake transactions table
 const transactions = [];
 
+router.post('/transaction', (req, res, next) => {
+  console.log(req.body)
+  // const { payer, points, timestamp } = req.body;
+  // return res.json({payer, points, timestamp});
+});
 
 router.get('/points', (req, res, next) => {
   return res.json(partners);
