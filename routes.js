@@ -12,11 +12,11 @@ global.partners = [
 // fake transactions table
 global.transactions = [];
 
-router.post('/transaction', (req, res, next) => {
+router.post('/transactions', (req, res, next) => {
   try {
     let transaction = new Transaction(req.body.payer, req.body.points, req.body.timestamp);
     transaction.create();
-    return res.status(201).json({transactions, partners});
+    return res.status(201).json(transaction);
   } catch(err) {
     return next(err);
   }
