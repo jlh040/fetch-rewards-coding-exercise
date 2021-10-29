@@ -30,6 +30,12 @@ class Transaction {
 
     return points;
   }
+
+  static spend(amount) {
+    if (amount > this.getTotalBalance()) {
+      throw new ExpressError(`You don't have enough points`);
+    }
+  }
 }
 
 module.exports = Transaction;
