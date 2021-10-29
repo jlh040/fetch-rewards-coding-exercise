@@ -47,7 +47,7 @@ describe('POST /transactions', () => {
     expect(transactions.length).toBe(1);
   });
 
-  test('transactions are sorted from oldest to newest', async () => {
+  test('transactions are sorted from oldest to newest', () => {
     const transaction1 = {
       payer: 'UNILEVER',
       points: 30,
@@ -69,6 +69,48 @@ describe('POST /transactions', () => {
       timestamp: '1999-11-10 17:54:22Z'
     };
 
+    const resp1 = request(app)
+      .post('/transactions')
+      .send(transaction1);
+
+    const resp2 = request(app)
+      .post('/transactions')
+      .send(transaction2);
+
+    const resp3 = request(app)
+      .post('/transactions')
+      .send(transaction3);
+
+    const resp4 = request(app)
+      .post('/transactions')
+      .send(transaction4);
+
+    Promise.all([resp1, resp2, resp3, resp4])
+      .then(() => {
+        expect(transactions[0]).toEqual(transaction2);
+        expect(transactions[3]).toEqual(transaction4);
+      });
+  });
+});
+
+describe('GET /points', () => {
+  test('returns points for all payers', async () => {
+    const transaction1 = {
+      payer: 'MILLER COORS',
+      points: 300,
+      timestamp: '2020-09-17 04:54:22Z'
+    };
+    const transaction2 = {
+      payer: 'DANNON',
+      points: 470,
+      timestamp: '2021-12-17 04:54:22Z'
+    };
+    const transaction3 = {
+      payer: 'UNILEVER',
+      points: 250,
+      timestamp: '2017-05-13 08:30:45Z'
+    };
+
     const resp1 = await request(app)
       .post('/transactions')
       .send(transaction1);
@@ -82,13 +124,8 @@ describe('POST /transactions', () => {
       .send(transaction3);
 
     const resp4 = await request(app)
-      .post('/transactions')
-      .send(transaction4);
+      .get('/points')
 
-    Promise.all([resp1, resp2, resp3, resp4])
-      .then(() => {
-        expect(transactions[0]).toEqual(transaction2);
-        expect(transactions[3]).toEqual(transaction4);
-      });
-  });
+    expect(Object.keys(resp4.body)).toEqual(['DANNON', 'UNILEVER', 'MILLER COORS']);
+  })
 })
