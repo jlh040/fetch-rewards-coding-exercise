@@ -29,5 +29,20 @@ describe('POST /transactions', () => {
 
     expect(resp.statusCode).toBe(201);
     expect(resp.body).toEqual(transaction);
+  });
+
+  test('adds a transaction to the transactions array', async () => {
+    const transaction = {
+      payer: 'UNILEVER',
+      points: 200,
+      timestamp: '2021-07-10 17:54:22Z'
+    };
+
+    const resp = await request(app)
+      .post('/transactions')
+      .send(transaction);
+    
+    expect(transactions.length).toBe(1);
+
   })
 })
