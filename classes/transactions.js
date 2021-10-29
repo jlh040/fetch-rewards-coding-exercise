@@ -45,6 +45,10 @@ class Transaction {
       let idx = pointsLostByPayer.findIndex(partner => partner.payer === oldestTransaction.payer);
       pointsLostByPayer[idx].points -= Math.min(oldestTransaction.points, amount - currPointsLost);
       currPointsLost += oldestTransaction.points;
+    };
+
+    for (let i = 0; i < partners.length; i++) {
+      partners[i].points += pointsLostByPayer[i].points;
     }
 
     return pointsLostByPayer;
