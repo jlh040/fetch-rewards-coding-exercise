@@ -33,7 +33,10 @@ router.post('/transaction', (req, res, next) => {
 
 router.get('/points', (req, res, next) => {
   try {
-    return res.json(partners);
+    let partnerObj = {};
+    partners.forEach(partner => partnerObj[partner.payer] = partner.points);
+    
+    return res.json(partnerObj);
   } catch(err) {
     return next(err)
   }
