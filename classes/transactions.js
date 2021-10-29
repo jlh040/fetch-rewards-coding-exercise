@@ -22,6 +22,14 @@ class Transaction {
     transactions.push(transaction);
     transactions.sort((a, b) => moment(a.timestamp) - moment(b.timestamp));
   }
+
+  static getTotalBalance() {
+    let points = partners.reduce((accum, next) => {
+      return accum + next.points;
+    }, 0);
+
+    return points;
+  }
 }
 
 module.exports = Transaction;
