@@ -19,8 +19,12 @@ class Transaction {
     };
 
     const transaction = {payer: this.payer, points: this.points, timestamp: this.timestamp};
+
     transactions.push(transaction);
+    mutableTransactionsArr.push(transaction);
+
     transactions.sort((a, b) => moment(a.timestamp) - moment(b.timestamp));
+    mutableTransactionsArr.sort((a, b) => moment(a.timestamp) - moment(b.timestamp));
   }
 
   static getTotalBalance() {
