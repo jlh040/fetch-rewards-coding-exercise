@@ -36,7 +36,18 @@ class Transaction {
       throw new ExpressError(`You don't have enough points!`, 400);
     }
     else {
-      return {message: 'nice one!'};
+      let pointsLostByPayer = partners.map(partner => ({payer: partner.payer, points: 0}));
+      let currPointsLost = 0;
+      let transactionsArrCopy = transactions.slice();
+
+      while (currPointsLost < amount) {
+        let oldestTransaction = transactionsArrCopy.shift()
+        let idx = pointsLostByPayer.findIndex(partner => partner.payer === oldestTransaction.payer);
+        pointsLostByPayer[idx].points -= Math.min(oldestTransaction.points, amount - currPointsLost);
+        currPointsLost += oldestTransaction.points; 
+      }
+
+      return pointsLostByPayer;
     }
   }
 }
