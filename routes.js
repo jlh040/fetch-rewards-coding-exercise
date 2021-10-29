@@ -18,7 +18,7 @@ router.post('/transaction', (req, res, next) => {
   try {
     let transaction = new Transaction(req.body.payer, req.body.points, req.body.timestamp);
     transaction.create();
-    return res.status(201).json(transaction);
+    return res.status(201).json({transactions, partners});
   } catch(err) {
     return next(err);
   }

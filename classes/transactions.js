@@ -10,6 +10,9 @@ class Transaction {
 
   create() {
     const timestamp = moment.utc(this.timestamp).format();
+    const idxOfPartner = partners.findIndex(partner => partner.payer === this.payer);
+
+    partners[idxOfPartner].points += this.points;
 
     if (timestamp === 'Invalid date') {
       throw new ExpressError('Please enter a valid date', 400);
