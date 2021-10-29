@@ -92,6 +92,8 @@ describe('POST /transactions', () => {
   });
 });
 
+/** GET /points - get the point balances for all payers; return `{ payer1Name: points, payer2Name: points, ... }` */
+
 describe('GET /points', () => {
   test('accurately returns points for all payers', async () => {
     const transaction1 = {
@@ -131,4 +133,24 @@ describe('GET /points', () => {
       'MILLER COORS': 300
     });
   });
+});
+
+describe('POST /points', () => {
+  test('returns a list containing all payers', async () => {
+    const transaction = {
+      payer: 'MILLER COORS',
+      points: 670,
+      timestamp: '2022-06-17 04:54:22Z'
+    };
+
+    const resp = await request(app)
+      .post('/transactions')
+      .send(transaction);
+
+    const resp2 = await request(app)
+      .post('/points')
+      .send({points: 500});
+
+    expect(resp2.body.length).toBe(partners.length);
+  })
 })
