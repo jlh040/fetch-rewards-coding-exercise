@@ -16,7 +16,7 @@ class Transaction {
 
     if (timestamp === 'Invalid date') {
       throw new ExpressError('Please enter a valid date', 400);
-    }
+    };
 
     const transaction = {payer: this.payer, points: this.points, timestamp: this.timestamp};
     transactions.push(transaction);
