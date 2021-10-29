@@ -1,31 +1,23 @@
 const express = require('express');
 const moment = require('moment');
 const ExpressError = require('./expressError');
+const Transaction = require('./classes/transactions');
 const router = new express.Router();
 
 // fake partners table
-const partners = [
+global.partners = [
   {payer: 'DANNON', points: 0},
   {payer: 'UNILEVER', points: 0},
   {payer: 'MILLER COORS', points: 0}
 ];
 
 // fake transactions table
-const transactions = [];
+global.transactions = [];
 
 router.post('/transaction', (req, res, next) => {
   try {
-    const timestamp = moment.utc(req.body.timestamp).format();
-
-    if (timestamp === 'Invalid date') {
-      throw new ExpressError('Please enter a valid date', 400);
-    }
-
-    const { payer, points } = req.body;
-    const transaction = {payer, points, timestamp}
-    transactions.push(transaction);
-    transactions.sort((a, b) => moment(a.timestamp) - moment(b.timestamp));
-
+    let transaction = new Transaction(req.body.payer, req.body.points, req.body.timestamp);
+    transaction.create();
     return res.status(201).json(transaction);
   } catch(err) {
     return next(err);
@@ -41,7 +33,7 @@ router.get('/points', (req, res, next) => {
   } catch(err) {
     return next(err)
   }
-})
+});
 
 
 
