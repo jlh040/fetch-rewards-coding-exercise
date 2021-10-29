@@ -12,8 +12,6 @@ global.partners = [
 // fake transactions table
 global.transactions = [];
 
-// fake mutable transactions table
-global.mutableTransactionsArr = [];
 
 router.post('/transaction', (req, res, next) => {
   try {
