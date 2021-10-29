@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/jlh040/fetch-rewards-coding-exercise/issues"
   },
-  "homepage": "https://github.com/jlh040/fetch-rewards-coding-exercise#readme"
+  "homepage": "https://github.com/jlh040/fetch-rewards-coding-exercise#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
