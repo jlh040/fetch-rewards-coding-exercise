@@ -15,6 +15,8 @@ afterEach(() => {
   transactions.length = 0;
 });
 
+/** POST /transactions - create new transaction from data; return `{ payer, points, timestamp }` */
+
 describe('POST /transactions', () => {
   test('creates a new transaction', async () => {
     const transaction = {
@@ -87,7 +89,6 @@ describe('POST /transactions', () => {
       .then(() => {
         expect(transactions[0]).toEqual(transaction2);
         expect(transactions[3]).toEqual(transaction4);
-      })
-    
-  })
+      });
+  });
 })
