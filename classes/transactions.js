@@ -47,6 +47,7 @@ class Transaction {
       currPointsLost += oldestTransaction.points;
     };
 
+    // update the points balance for all the partners
     for (let i = 0; i < partners.length; i++) {
       partners[i].points += pointsLostByPayer[i].points;
     }

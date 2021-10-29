@@ -12,7 +12,6 @@ global.partners = [
 // fake transactions table
 global.transactions = [];
 
-
 router.post('/transaction', (req, res, next) => {
   try {
     let transaction = new Transaction(req.body.payer, req.body.points, req.body.timestamp);
