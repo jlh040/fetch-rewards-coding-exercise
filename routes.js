@@ -35,7 +35,7 @@ router.get('/points', (req, res, next) => {
 
 router.post('/points', (req, res, next) => {
   try {
-    let resp = Transaction.spend(+req.body.amount);
+    let resp = Transaction.spend(+req.body.points);
     return res.json(resp);
   } catch(err) {
     return next(err);

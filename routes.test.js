@@ -152,5 +152,24 @@ describe('POST /points', () => {
       .send({points: 500});
 
     expect(resp2.body.length).toBe(partners.length);
+  });
+
+  test(`returns an error message if you don't have enough points`, async () => {
+    const transaction = {
+      payer: 'DANNON',
+      points: 1000,
+      timestamp: '2005-10-09 03:00:22Z'
+    };
+
+    const resp = await request(app)
+      .post('/transactions')
+      .send(transaction);
+
+    const resp2 = await request(app)
+      .post('/points')
+      .send({points: 2500})
+    console.log(resp2.body)
+
+    expect(resp2.statusCode).toBe(400);
   })
 })
