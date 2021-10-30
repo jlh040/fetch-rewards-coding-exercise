@@ -58,6 +58,4 @@ router.post('/points', (req, res, next) => {
   }
 });
 
-
-
 module.exports = router;
