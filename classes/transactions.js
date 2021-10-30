@@ -14,10 +14,6 @@ class Transaction {
 
     partners[idxOfPartner].points += this.points;
 
-    if (timestamp === 'Invalid date') {
-      throw new ExpressError('Please enter a valid date', 400);
-    };
-
     const transaction = {payer: this.payer, points: this.points, timestamp: this.timestamp};
     transactions.push(transaction);
     transactions.sort((a, b) => moment(a.timestamp) - moment(b.timestamp));

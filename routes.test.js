@@ -33,7 +33,7 @@ describe('POST /transactions', () => {
     const transaction = {
       payer: 'DANNON',
       points: 450,
-      timestamp: '2013-06-13 17:54:22Z'
+      timestamp: '2013-06-13T17:54:22Z'
     };
 
     const resp = await request(app)
@@ -48,7 +48,7 @@ describe('POST /transactions', () => {
     const transaction = {
       payer: 'UNILEVER',
       points: 200,
-      timestamp: '2021-07-10 17:54:22Z'
+      timestamp: '2021-07-10T17:54:22Z'
     };
 
     await request(app)
@@ -62,22 +62,22 @@ describe('POST /transactions', () => {
     const transaction1 = {
       payer: 'UNILEVER',
       points: 30,
-      timestamp: '1999-07-10 17:54:22Z'
+      timestamp: '1999-07-10T17:54:22Z'
     };
     const transaction2 = {
       payer: 'DANNON',
       points: 750,
-      timestamp: '1999-01-10 17:54:22Z'
+      timestamp: '1999-01-10T17:54:22Z'
     };
     const transaction3 = {
       payer: 'MILLER COORS',
       points: 400,
-      timestamp: '1999-08-10 17:54:22Z'
+      timestamp: '1999-08-10T17:54:22Z'
     };
     const transaction4 = {
       payer: 'MILLER COORS',
       points: 250,
-      timestamp: '1999-11-10 17:54:22Z'
+      timestamp: '1999-11-10T17:54:22Z'
     };
 
     await request(app)
@@ -110,17 +110,17 @@ describe('GET /points', () => {
     const transaction1 = {
       payer: 'MILLER COORS',
       points: 300,
-      timestamp: '2020-09-17 04:54:22Z'
+      timestamp: '2020-09-17T04:54:22Z'
     };
     const transaction2 = {
       payer: 'DANNON',
       points: 470,
-      timestamp: '2021-12-17 04:54:22Z'
+      timestamp: '2021-12-17T04:54:22Z'
     };
     const transaction3 = {
       payer: 'UNILEVER',
       points: 250,
-      timestamp: '2017-05-13 08:30:45Z'
+      timestamp: '2017-05-13T08:30:45Z'
     };
 
     await request(app)
@@ -153,7 +153,7 @@ describe('POST /points', () => {
     const transaction = {
       payer: 'MILLER COORS',
       points: 670,
-      timestamp: '2022-06-17 04:54:22Z'
+      timestamp: '2022-06-17T04:54:22Z'
     };
 
     await request(app)
@@ -171,7 +171,7 @@ describe('POST /points', () => {
     const transaction = {
       payer: 'DANNON',
       points: 1000,
-      timestamp: '2005-10-09 03:00:22Z'
+      timestamp: '2005-10-09T03:00:22Z'
     };
 
     await request(app)
@@ -189,7 +189,7 @@ describe('POST /points', () => {
     const transaction = {
       payer: 'UNILEVER',
       points: 550,
-      timestamp: '2010-11-09 05:02:31Z'
+      timestamp: '2010-11-09T05:02:31Z'
     };
 
     await request(app)

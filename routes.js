@@ -1,5 +1,7 @@
 const express = require('express');
 const jsonschema = require('jsonschema');
+const newTransactionSchema = require('./schemas/newTransaction.json');
+const ExpressError = require('./expressError');
 const Transaction = require('./classes/transactions');
 const router = new express.Router();
 
@@ -15,7 +17,13 @@ global.transactions = [];
 
 router.post('/transactions', (req, res, next) => {
   try {
-    let transaction = new Transaction(req.body.payer, req.body.points, req.body.timestamp);
+    const validator = jsonschema.validate(req.body, newTransactionSchema);
+    if (!validator.valid) {
+      const errors = validator.errors.map(e => e.stack);
+      throw new ExpressError(errors, 400);
+    }
+
+    const transaction = new Transaction(req.body.payer, req.body.points, req.body.timestamp);
     transaction.create();
     return res.status(201).json(transaction);
   } catch(err) {
