@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "properties": {
+    "payer": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 15
+    },
+    "points": {
+      "type": "integer"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "payer",
+    "points",
+    "timestamp"
+  ]
+}
