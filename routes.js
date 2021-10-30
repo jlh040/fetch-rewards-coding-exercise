@@ -2,14 +2,14 @@ const express = require('express');
 const Transaction = require('./classes/transactions');
 const router = new express.Router();
 
-// fake partners table
+// fake partners database table
 global.partners = [
   {payer: 'DANNON', points: 0},
   {payer: 'UNILEVER', points: 0},
   {payer: 'MILLER COORS', points: 0}
 ];
 
-// fake transactions table
+// fake transactions database table
 global.transactions = [];
 
 router.post('/transactions', (req, res, next) => {
@@ -40,7 +40,7 @@ router.post('/points', (req, res, next) => {
   } catch(err) {
     return next(err);
   }
-})
+});
 
 
 

@@ -15,6 +15,17 @@ afterEach(() => {
   transactions.length = 0;
 });
 
+/** 404 error handler test */
+
+describe('test for a 404', () => {
+  test('returns a 404 if the resource is not found', async () => {
+    const resp = await request(app)
+      .get('/doesnotexist');
+    
+    expect(resp.statusCode).toBe(404);
+  })
+})
+
 /** POST /transactions - create new transaction from data; return `{ payer, points, timestamp }` */
 
 describe('POST /transactions', () => {
