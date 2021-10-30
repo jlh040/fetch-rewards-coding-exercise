@@ -188,5 +188,68 @@ describe('POST /points', () => {
       .send({points: 250})
     
     expect(resp2.body).toBeInstanceOf(Array);
+  });
+
+  test('accurately returns points and updates point balances', async () => {
+    const transaction1 = {
+      payer: 'DANNON',
+      points: 1000,
+      timestamp: '2020-11-02T14:00:00Z'
+    };
+    const transaction2 = {
+      payer: 'UNILEVER',
+      points: 200,
+      timestamp: '2020-10-31T11:00:00Z'
+    };
+    const transaction3 = {
+      payer: 'DANNON',
+      points: -200,
+      timestamp: '2020-10-31T15:00:00Z'
+    };
+    const transaction4 = {
+      payer: 'MILLER COORS',
+      points: 10000,
+      timestamp: '2020-11-01T14:00:00Z'
+    };
+    const transaction5 = {
+      payer: 'DANNON',
+      points: 300,
+      timestamp: '2020-10-31T10:00:00Z'
+    };
+
+    const resp1 = await request(app)
+      .post('/transactions')
+      .send(transaction1);
+    const resp2 = await request(app)
+      .post('/transactions')
+      .send(transaction2);
+    const resp3 = await request(app)
+      .post('/transactions')
+      .send(transaction3);
+    const resp4 = await request(app)
+      .post('/transactions')
+      .send(transaction4);
+    const resp5 = await request(app)
+      .post('/transactions')
+      .send(transaction5);
+
+    const resp6 = await request(app)
+      .post('/points')
+      .send({points: 5000});
+
+    expect(resp6.body).toEqual([
+      { 'payer': 'DANNON', 'points': -100 },
+      { 'payer': 'UNILEVER', 'points': -200 },
+      { 'payer': 'MILLER COORS', 'points': -4700 },
+    ]);
+
+    const resp7 = await request(app)
+      .get('/points')
+    
+    expect(resp7.body).toEqual({
+      'DANNON': 1000,
+      'UNILEVER': 0,
+      'MILLER COORS': 5300
+    })
   })
 })
