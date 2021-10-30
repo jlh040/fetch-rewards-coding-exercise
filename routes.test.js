@@ -135,6 +135,8 @@ describe('GET /points', () => {
   });
 });
 
+/** POST /points - spends a user's points; return `[ { payer, deductedPoints }, { payer, deductedPoints }, ...]` */
+
 describe('POST /points', () => {
   test('returns a list containing all payers', async () => {
     const transaction = {
@@ -244,12 +246,12 @@ describe('POST /points', () => {
     ]);
 
     const resp2 = await request(app)
-      .get('/points')
+      .get('/points');
     
     expect(resp2.body).toEqual({
       'DANNON': 1000,
       'UNILEVER': 0,
       'MILLER COORS': 5300
-    })
-  })
-})
+    });
+  });
+});
