@@ -40,7 +40,7 @@ describe('POST /transactions', () => {
       timestamp: '2021-07-10 17:54:22Z'
     };
 
-    const resp = await request(app)
+    await request(app)
       .post('/transactions')
       .send(transaction);
     
@@ -69,19 +69,19 @@ describe('POST /transactions', () => {
       timestamp: '1999-11-10 17:54:22Z'
     };
 
-    const resp1 = await request(app)
+    await request(app)
       .post('/transactions')
       .send(transaction1);
 
-    const resp2 = await request(app)
+    await request(app)
       .post('/transactions')
       .send(transaction2);
 
-    const resp3 = await request(app)
+    await request(app)
       .post('/transactions')
       .send(transaction3);
 
-    const resp4 = await request(app)
+    await request(app)
       .post('/transactions')
       .send(transaction4);
 
@@ -112,22 +112,22 @@ describe('GET /points', () => {
       timestamp: '2017-05-13 08:30:45Z'
     };
 
-    const resp1 = await request(app)
+    await request(app)
       .post('/transactions')
       .send(transaction1);
 
-    const resp2 = await request(app)
+    await request(app)
       .post('/transactions')
       .send(transaction2);
 
-    const resp3 = await request(app)
+    await request(app)
       .post('/transactions')
       .send(transaction3);
 
-    const resp4 = await request(app)
+    const resp1 = await request(app)
       .get('/points')
 
-    expect(resp4.body).toEqual({
+    expect(resp1.body).toEqual({
       DANNON: 470,
       UNILEVER: 250,
       'MILLER COORS': 300
@@ -143,15 +143,15 @@ describe('POST /points', () => {
       timestamp: '2022-06-17 04:54:22Z'
     };
 
-    const resp = await request(app)
+    await request(app)
       .post('/transactions')
       .send(transaction);
 
-    const resp2 = await request(app)
+    const resp1 = await request(app)
       .post('/points')
       .send({points: 500});
 
-    expect(resp2.body.length).toBe(partners.length);
+    expect(resp1.body.length).toBe(partners.length);
   });
 
   test(`returns an error if you don't have enough points`, async () => {
@@ -161,15 +161,15 @@ describe('POST /points', () => {
       timestamp: '2005-10-09 03:00:22Z'
     };
 
-    const resp = await request(app)
+    await request(app)
       .post('/transactions')
       .send(transaction);
 
-    const resp2 = await request(app)
+    const resp1 = await request(app)
       .post('/points')
       .send({points: 2500})
 
-    expect(resp2.statusCode).toBe(400);
+    expect(resp1.statusCode).toBe(400);
   });
 
   test('returns an array', async () => {
@@ -179,15 +179,15 @@ describe('POST /points', () => {
       timestamp: '2010-11-09 05:02:31Z'
     };
 
-    const resp = await request(app)
+    await request(app)
       .post('/transactions')
       .send(transaction);
 
-    const resp2 = await request(app)
+    const resp1 = await request(app)
       .post('/points')
       .send({points: 250})
     
-    expect(resp2.body).toBeInstanceOf(Array);
+    expect(resp1.body).toBeInstanceOf(Array);
   });
 
   test('accurately returns points and updates point balances', async () => {
@@ -217,36 +217,36 @@ describe('POST /points', () => {
       timestamp: '2020-10-31T10:00:00Z'
     };
 
-    const resp1 = await request(app)
+    await request(app)
       .post('/transactions')
       .send(transaction1);
-    const resp2 = await request(app)
+    await request(app)
       .post('/transactions')
       .send(transaction2);
-    const resp3 = await request(app)
+    await request(app)
       .post('/transactions')
       .send(transaction3);
-    const resp4 = await request(app)
+    await request(app)
       .post('/transactions')
       .send(transaction4);
-    const resp5 = await request(app)
+    await request(app)
       .post('/transactions')
       .send(transaction5);
 
-    const resp6 = await request(app)
+    const resp1 = await request(app)
       .post('/points')
       .send({points: 5000});
 
-    expect(resp6.body).toEqual([
+    expect(resp1.body).toEqual([
       { 'payer': 'DANNON', 'points': -100 },
       { 'payer': 'UNILEVER', 'points': -200 },
       { 'payer': 'MILLER COORS', 'points': -4700 },
     ]);
 
-    const resp7 = await request(app)
+    const resp2 = await request(app)
       .get('/points')
     
-    expect(resp7.body).toEqual({
+    expect(resp2.body).toEqual({
       'DANNON': 1000,
       'UNILEVER': 0,
       'MILLER COORS': 5300
