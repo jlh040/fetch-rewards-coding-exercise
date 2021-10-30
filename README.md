@@ -10,6 +10,8 @@ This repository is my solution to the Fetch Rewards Backend Software Engineering
 - Once you have Node installed, type `npm install` to download all of the project dependencies.
 - The application runs on a server, to start the server on port 3000, type `node server.js`.
 - You will need to be able to make HTTP requests to the server, you can do this in the browser at `http://localhost:3000`, or you can download a tool like [Insomnia](https://insomnia.rest/) which makes it easy to make requests.
+- To stop the server, press control + D
+  - Note that everytime you restart the server, you will lose all payer points and transactions
 - Please see below for the available endpoints.
 
 ## Testing
@@ -23,6 +25,7 @@ This repository is my solution to the Fetch Rewards Backend Software Engineering
   - Example: `{payer: 'DANNON' points: 350, timestamp: '2017-05-13T08:30:45Z'}`
 - Returns `{ payer, points, timestamp }`
 - This route allows a user to create a transaction
+- Note that *payer* must be one of: 'DANNON', 'UNILEVER', or 'MILLER COORS' but this can easily be extended.
 
 ### GET /points
 - No requirements
