@@ -267,4 +267,58 @@ describe('POST /points', () => {
       'MILLER COORS': 5300
     });
   });
+
+  test('returns accurate data even after multiple calls', async () => {
+    const transaction1 = {
+      payer: 'UNILEVER',
+      points: 50,
+      timestamp: '2019-11-02T14:00:00Z'
+    };
+    const transaction2 = {
+      payer: 'DANNON',
+      points: 20,
+      timestamp: '2020-06-20T10:30:00Z'
+    };
+    const transaction3 = {
+      payer: 'MILLER COORS',
+      points: -70,
+      timestamp: '2022-09-25T13:00:00Z'
+    };
+    const transaction4 = {
+      payer: 'MILLER COORS',
+      points: 100,
+      timestamp: '2021-10-31T15:00:00Z'
+    };
+
+    await request(app)
+      .post('/transactions')
+      .send(transaction1);
+    await request(app)
+      .post('/transactions')
+      .send(transaction2);
+    await request(app)
+      .post('/transactions')
+      .send(transaction3);
+    await request(app)
+      .post('/transactions')
+      .send(transaction4);
+
+    const resp1 = await request(app)
+      .post('/points')
+      .send({points: 30});
+    expect(resp1.body).toEqual([
+      {payer: 'DANNON', points: 0},
+      {payer: 'UNILEVER', points: -30},
+      {payer: 'MILLER COORS', points: 0},
+    ]);
+
+    const resp2 = await request(app)
+      .post('/points')
+      .send({points: 50});
+    expect(resp2.body).toEqual([
+      {payer: 'DANNON', points: -20},
+      {payer: 'UNILEVER', points: -20},
+      {payer: 'MILLER COORS', points: -10}
+    ]);
+  })
 });
