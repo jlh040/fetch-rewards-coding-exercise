@@ -1,6 +1,7 @@
 const express = require('express');
 const jsonschema = require('jsonschema');
 const newTransactionSchema = require('./schemas/newTransaction.json');
+const spendPointsSchema = require('./schemas/spendPoints.json');
 const ExpressError = require('./expressError');
 const Transaction = require('./classes/transactions');
 const router = new express.Router();
@@ -44,7 +45,13 @@ router.get('/points', (req, res, next) => {
 
 router.post('/points', (req, res, next) => {
   try {
-    let resp = Transaction.spend(+req.body.points);
+    const validator = jsonschema.validate(req.body, spendPointsSchema);
+    if (!validator.valid) {
+      const errors = validator.errors.map(e => e.stack);
+      throw new ExpressError(errors, 400);
+    }
+
+    const resp = Transaction.spend(+req.body.points);
     return res.json(resp);
   } catch(err) {
     return next(err);
