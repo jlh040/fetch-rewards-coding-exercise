@@ -16,6 +16,9 @@ global.partners = [
 // a fake database table to hold all of the transactions
 global.transactions = [];
 
+// holds all modified transactions
+global.session = [];
+
 /** POST /transactions  { payer, points, timestamp } => { payer, points, timestamp }
  *
  * Creates a new transaction.

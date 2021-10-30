@@ -9,7 +9,6 @@ class Transaction {
   }
 
   create() {
-    const timestamp = moment.utc(this.timestamp).format();
     const idxOfPartner = partners.findIndex(partner => partner.payer === this.payer);
 
     partners[idxOfPartner].points += this.points;
@@ -39,8 +38,12 @@ class Transaction {
     while (currPointsLost < amount) {
       let oldestTransaction = transactionsArrCopy.shift()
       let idx = pointsLostByPayer.findIndex(partner => partner.payer === oldestTransaction.payer);
-      pointsLostByPayer[idx].points -= Math.min(oldestTransaction.points, amount - currPointsLost);
-      currPointsLost += oldestTransaction.points;
+
+      let points = -Math.min(oldestTransaction.points, amount - currPointsLost);
+      pointsLostByPayer[idx].points += points;
+      currPointsLost -= points;
+
+      session.push({...oldestTransaction, points});
     };
 
     // update the points balance for all the partners
@@ -48,7 +51,20 @@ class Transaction {
       partners[i].points += pointsLostByPayer[i].points;
     }
 
+    this.update();
     return pointsLostByPayer;
+  }
+
+  static update() {
+    for (let i = 0; i < session.length; i++) {
+      transactions[i].points += session[i].points;
+    }
+
+    transactions = transactions.filter(obj => {
+      return obj.points !== 0;
+    })
+
+    session.length = 0;
   }
 }
 
