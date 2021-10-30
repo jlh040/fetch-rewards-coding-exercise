@@ -22,7 +22,7 @@ This repository is my solution to the Fetch Rewards Backend Software Engineering
 
 ### POST /transactions
 - Requires `{ payer, points, timestamp }`
-  - Example: `{payer: 'DANNON' points: 350, timestamp: '2017-05-13T08:30:45Z'}`
+  - Example: `{payer: 'DANNON', points: 350, timestamp: '2017-05-13T08:30:45Z'}`
 - Returns `{ payer, points, timestamp }`
 - This route allows a user to create a transaction
 - Note that *payer* must be one of: 'DANNON', 'UNILEVER', or 'MILLER COORS' but this can easily be extended.
