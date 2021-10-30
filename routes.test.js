@@ -154,7 +154,7 @@ describe('POST /points', () => {
     expect(resp2.body.length).toBe(partners.length);
   });
 
-  test(`returns an error message if you don't have enough points`, async () => {
+  test(`returns an error if you don't have enough points`, async () => {
     const transaction = {
       payer: 'DANNON',
       points: 1000,
@@ -168,8 +168,25 @@ describe('POST /points', () => {
     const resp2 = await request(app)
       .post('/points')
       .send({points: 2500})
-    console.log(resp2.body)
 
     expect(resp2.statusCode).toBe(400);
+  });
+
+  test('returns an array', async () => {
+    const transaction = {
+      payer: 'UNILEVER',
+      points: 550,
+      timestamp: '2010-11-09 05:02:31Z'
+    };
+
+    const resp = await request(app)
+      .post('/transactions')
+      .send(transaction);
+
+    const resp2 = await request(app)
+      .post('/points')
+      .send({points: 250})
+    
+    expect(resp2.body).toBeInstanceOf(Array);
   })
 })
